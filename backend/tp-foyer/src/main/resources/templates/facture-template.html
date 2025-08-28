@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 11px;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .invoice-preview {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .invoice-header {
+            width: 100%;
+            display: table;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        .header-left {
+            display: table-cell;
+            vertical-align: top;
+            width: 70%;
+        }
+        .header-left img {
+            max-width: 80px;
+            display: inline-block;
+            vertical-align: top;
+        }
+        .company-details {
+            display: inline-block;
+            margin-left: 15px;
+            vertical-align: top;
+        }
+        .company-details h2 {
+            margin: 0;
+            color: #c61056;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .company-details p {
+            margin: 2px 0;
+            font-size: 10px;
+            color: #666;
+        }
+
+        .invoice-meta {
+            display: table-cell;
+            text-align: right;
+            vertical-align: top;
+            width: 30%;
+        }
+        .invoice-meta p {
+            margin: 3px 0;
+            font-size: 11px;
+        }
+        .invoice-meta .numero-facture {
+            font-weight: bold;
+            color: #c61056;
+        }
+
+        .client-details {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .client-details p {
+            margin: 0;
+            font-size: 12px;
+        }
+
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .preview-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .preview-table td {
+            padding: 6px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 11px;
+        }
+
+        .invoice-totals {
+            background-color: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            width: 250px;
+            margin-left: auto;
+            font-size: 11px;
+        }
+        .invoice-totals .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        .invoice-totals .grand-total {
+            font-weight: bold;
+            color: #c61056;
+            font-size: 12px;
+            border-top: 1px solid #ddd;
+            padding-top: 6px;
+        }
+
+        .legal-mention {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px dashed #ddd;
+            font-style: italic;
+            font-size: 10px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+<div class="invoice-preview">
+    <!-- Header -->
+    <div class="invoice-header">
+        <div class="header-left">
+            <img src="${logoPath}" alt="Logo"/>
+            <div class="company-details">
+                <h2>BELGHITH AUDITION</h2>
+                <p>307, centre Aziz, avenue de l'Indépendance</p>
+                <p>Manzel Bourguiba , Bizerte</p>
+                <p>Tél : 27 817 104</p>
+                <p>Messagerie : belghith.audition@gmail.com</p>
+            </div>
+        </div>
+        <div class="invoice-meta">
+            <p class="numero-facture">Facture N° ${numeroFacture}</p>
+            <p>Date : ${dateFacture}</p>
+        </div>
+    </div>
+
+    <!-- Client -->
+    <div class="client-details">
+        <p><strong>Client :</strong> ${nomClient}</p>
+    </div>
+
+    <!-- Table -->
+    <table class="preview-table">
+        <thead>
+        <tr>
+            <th>Désignation</th>
+            <th>Qté</th>
+            <th>P.U HT</th>
+            <th>TVA</th>
+            <th>P.T HT</th>
+        </tr>
+        </thead>
+        <tbody>
+        ${lignes}
+        </tbody>
+    </table>
+
+    <!-- Totals -->
+    <div class="invoice-totals">
+        <div class="row"><span>Total HT :</span><span>${totalHT}</span></div>
+        <div class="row"><span>TVA :</span><span>${totalTVA}</span></div>
+        <div class="row"><span>Timbre :</span><span>${timbreFiscal}</span></div>
+        <div class="row grand-total"><span>Total TTC :</span><span>${totalTTC}</span></div>
+    </div>
+
+    <!-- Montant -->
+    <div class="legal-mention">
+        Montant en lettres : ${montantEnLettres}
+    </div>
+</div>
+</body>
+</html>
