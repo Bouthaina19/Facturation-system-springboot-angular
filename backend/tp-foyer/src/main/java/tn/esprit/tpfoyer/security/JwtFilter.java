@@ -30,10 +30,14 @@ public class JwtFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             if (jwtUtil.validateToken(token)) {
+                System.out.println("✅ Token valide: " + token);
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken("manager", null, List.of());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                System.out.println("❌ Token invalide ou expiré: " + token);
             }
+
         }
         filterChain.doFilter(request, response);
     }
