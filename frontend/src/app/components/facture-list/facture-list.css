@@ -1,0 +1,134 @@
+.factures-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin: 2rem auto;
+  max-width: 1000px;
+}
+
+.factures-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+
+.factures-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.btn-delete {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  flex: 1;
+  min-width: 250px;
+}
+
+.form-select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+
+.factures-table th:hover {
+  background-color: #eee;
+}
+
+/* Ajoute ceci dans facture-list.css */
+
+.btn-download {
+  background-color: #c61056;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.btn-download:hover {
+  background-color:  #a50e48;
+}
+
+.factures-table th {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 1.2rem; /* espace pour la flèche */
+  background: #f8f9fa;
+  padding: 1rem;
+  border-bottom: 2px solid #ddd;
+  text-align: left;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.factures-table th span {
+  font-size: 0.8rem;
+  margin-left: 4px;
+  color: #c61056; /* même couleur que ton thème */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 2rem 0 0 0;
+}
+
+.btn-paginate {
+  background-color: #c61056;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-paginate:disabled {
+  background-color: #eee;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.btn-paginate:not(:disabled):hover {
+  background-color: #a50e48;
+  transform: translateY(-2px) scale(1.04);
+}
+
+.pagination-info {
+  font-weight: 500;
+  color: #2c3e50;
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+  background: #f8f9fa;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}

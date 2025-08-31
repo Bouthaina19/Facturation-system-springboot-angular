@@ -1,0 +1,85 @@
+<div class="invoice-app-container">
+  <div class="invoice-editor">
+    <h2 class="editor-title">Gestion des Produits</h2>
+
+    <!-- Recherche -->
+    <div class="form-group">
+      <input
+        class="form-control"
+        [(ngModel)]="searchTerm"
+        (input)="applyFilters()"
+        placeholder="🔍 Rechercher un produit..."
+      />
+    </div>
+
+    <!-- Formulaire produit -->
+    <div *ngIf="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
+    <div class="form-group">
+      <label class="form-label">Nom produit</label>
+      <input class="form-control" [(ngModel)]="produitForm.nom" placeholder="Ex: TERRA+SP 600">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Prix HT</label>
+      <input type="number" class="form-control" [(ngModel)]="produitForm.prixHT" min="0" step="0.01">
+    </div>
+    <div class="form-group">
+      <label class="form-label">TVA</label>
+      <select class="form-select" [(ngModel)]="produitForm.tva">
+        <option [ngValue]="0">0%</option>
+        <option [ngValue]="19">19%</option>
+      </select>
+    </div>
+
+    <div class="action-buttons">
+      <button class="btn btn-add" (click)="saveProduit()">
+        {{ isEditing ? 'Mettre à jour' : 'Ajouter' }}
+      </button>
+      <button *ngIf="isEditing" class="btn btn-print" (click)="resetForm()">Annuler</button>
+    </div>
+
+    <!-- Table produits -->
+    <div class="table-responsive">
+      <table class="invoice-table">
+        <thead>
+  <tr>
+    <th (click)="changeSort('nom')">
+      Nom
+      <span *ngIf="sortKey === 'nom'">
+        {{ sortDirection === 'asc' ? '▲' : '▼' }}
+      </span>
+    </th>
+    <th (click)="changeSort('prixHT')">
+      Prix HT
+      <span *ngIf="sortKey === 'prixHT'">
+        {{ sortDirection === 'asc' ? '▲' : '▼' }}
+      </span>
+    </th>
+    <th>
+      TVA
+    </th>
+    <th>
+      Actions
+    </th>
+  </tr>
+</thead>
+        <tbody>
+          <tr *ngFor="let p of filteredProduits">
+            <td>{{ p.nom }}</td>
+            <td style="text-align:right;">{{ p.prixHT | number:'1.2-2' }} DT</td>
+            <td style="text-align:right;">{{ p.tva }}%</td>
+            <td>
+              <button class="btn btn-add" (click)="editProduit(p)">Modifier</button>
+              <button class="btn btn-delete" (click)="deleteProduit(p.id!)">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="pagination">
+  <button class="btn-paginate" [disabled]="page === 0" (click)="prevPage()">⬅ Précédent</button>
+  <span class="pagination-info">Page {{ page + 1 }} / {{ totalPages }}</span>
+  <button class="btn-paginate" [disabled]="page + 1 >= totalPages" (click)="nextPage()">Suivant ➡</button>
+</div>

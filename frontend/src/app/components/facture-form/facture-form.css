@@ -1,0 +1,369 @@
+/* Main Container */
+.invoice-app-container {
+  font-family: 'Poppins', sans-serif;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Editor Section */
+.invoice-editor {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+}
+
+.editor-title {
+  color: #c61056;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: #c61056;
+  outline: none;
+}
+
+.form-select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+/* Buttons */
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s;
+}
+
+.btn-add {
+  background-color: #c61056;
+  color: white;
+}
+
+.btn-add:hover {
+  background-color: #a50e48;
+}
+
+.btn-print {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.btn-print:hover {
+  background-color: #1a252f;
+}
+
+.btn-delete {
+  background-color: #e74c3c;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+}
+
+/* Table Styles */
+.table-responsive {
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.invoice-table th {
+  background-color: #f8f9fa;
+  color: #333;
+  font-weight: 600;
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+
+.invoice-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.invoice-table tr:last-child td {
+  border-bottom: none;
+}
+
+.invoice-table tr:hover td {
+  background-color: #f9f9f9;
+}
+
+/* Totals Section */
+.totals-section {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+
+.total-row:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.total-label {
+  font-weight: 500;
+  color: #555;
+}
+
+.total-value {
+  font-weight: 600;
+}
+
+.grand-total .total-label,
+.grand-total .total-value {
+  font-size: 1.1rem;
+  color: #c61056;
+}
+
+.amount-in-words {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #ddd;
+  font-style: italic;
+  color: #666;
+}
+
+/* Invoice Preview (PDF) */
+.invoice-preview {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-top: 2rem;
+}
+
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.header-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.logo {
+  width: 80px;
+  height: auto;
+}
+
+.company-details h2 {
+  margin: 0;
+  color: #c61056;
+  font-size: 1.5rem;
+}
+
+.company-details p {
+  margin: 0.5rem 0 0;
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.invoice-meta {
+  text-align: right;
+}
+
+
+.invoice-meta .numero-facture {
+  white-space: nowrap;
+}
+
+
+.invoice-meta p {
+  margin: 0.25rem 0;
+  color: #555;
+}
+
+.client-details {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.client-details p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.preview-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+.preview-table th {
+  background-color: #f8f9fa;
+  color: #333;
+  font-weight: 600;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.preview-table td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.invoice-totals {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  max-width: 300px;
+  margin-left: auto;
+}
+
+.legal-mention {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #ddd;
+  font-style: italic;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .invoice-header {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .header-left {
+    flex-direction: column;
+  }
+  
+  .invoice-meta {
+    text-align: left;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.invoice-totals .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  white-space: nowrap;   /* ✅ empêche le retour à la ligne */
+}
+
+.invoice-totals .row span:last-child {
+  text-align: right;     /* ✅ aligne les montants à droite */
+  min-width: 80px;       /* ✅ réserve un espace fixe pour les chiffres */
+}
+
+/* Tableau Facture */
+.preview-table th,
+.preview-table td {
+  white-space: nowrap;         /* ✅ évite retour à la ligne */
+}
+
+.preview-table td:nth-child(2), /* Qté */
+.preview-table td:nth-child(3), /* P.U HT */
+.preview-table td:nth-child(4), /* TVA */
+.preview-table td:nth-child(5)  /* P.T HT */
+{
+  text-align: right;           /* ✅ alignement chiffres */
+  font-family: monospace;      /* ✅ chiffres alignés proprement */
+  min-width: 90px;             /* ✅ largeur mini */
+}
+
+/* Bloc Totaux */
+.invoice-totals .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  white-space: nowrap;         /* ✅ évite retour à la ligne */
+}
+
+.invoice-totals .row span:first-child {
+  flex: 1;
+  text-align: left;
+}
+
+.invoice-totals .row span:last-child {
+  flex: 0 0 100px;             /* ✅ réserve un bloc fixe pour les chiffres */
+  text-align: right;
+  font-family: monospace;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .preview-table {
+    display: block;
+    overflow-x: auto;          /* ✅ scroll horizontal si écran petit */
+    white-space: nowrap;
+  }
+}

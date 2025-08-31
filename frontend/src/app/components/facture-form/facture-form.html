@@ -1,0 +1,121 @@
+<div class="invoice-app-container">
+  <div class="invoice-editor">
+    <h2 class="editor-title">Créer une facture</h2>
+
+    <!-- Client Info -->
+    <div class="form-group">
+      <label class="form-label">Nom du client</label>
+      <input class="form-control" [(ngModel)]="nomClient" placeholder="Nom complet">
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="btn btn-add" (click)="ajouterLigne()">
+        <fa-icon [icon]="['fas', 'plus']"></fa-icon> Ajouter une ligne
+      </button>
+      <button class="btn btn-print"  [disabled]="!lignes.length" (click)="enregistrerEtImprimer()">
+  <fa-icon [icon]="['fas', 'file-pdf']"></fa-icon> Enregistrer & Imprimer
+</button>
+
+
+    </div>
+
+    <!-- Invoice Lines Table -->
+    <div class="table-responsive">
+      <table class="invoice-table">
+        <thead>
+          <tr>
+            <th>Désignation</th>
+            <th>Qté</th>
+            <th>P U HT</th>
+            <th>TVA</th>
+            <th>P T HT</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ligne of lignes; let i = index">
+            <td>
+              <select class="form-select" [(ngModel)]="ligne.produit" (change)="mettreAJourLigne(i)">
+                <option *ngFor="let p of produits" [ngValue]="p">{{ p.nom }}</option>
+              </select>
+            </td>
+            <td><input type="number" class="form-control" [(ngModel)]="ligne.quantite" (input)="mettreAJourLigne(i)"></td>
+            <td>{{ ligne.prixUnitaire | number:'1.3-3' }}</td>
+            <td>
+              <select class="form-select" [(ngModel)]="ligne.tva" (change)="mettreAJourLigne(i)">
+                <option [ngValue]="0">0%</option>
+                <option [ngValue]="19">19%</option>
+              </select>
+            </td>
+            <td>{{ ligne.prixTotalHT | number:'1.3-3' }}</td>
+            <td>
+              <button class="btn btn-delete" (click)="supprimerLigne(i)">
+  <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+<!-- Preview Section -->
+<div class="invoice-preview" *ngIf="nomClient && lignes.length > 0">
+  <!-- Header -->
+  <div class="invoice-header">
+    <div class="header-left">
+      <img class="logo" src="assets/logo.png" alt="Logo"/>
+      <div class="company-details">
+        <h2>BELGHITH AUDITION</h2>
+        <p>307, centre Aziz, avenue de l'Indépendance</p>
+        <p>Manzel Bourguiba , Bizerte</p>
+        <p>Tél : 27 817 104</p>
+        <p>Messagerie : belghith.audition@gmail.com</p>
+      </div>
+    </div>
+    <div class="invoice-meta">
+      <p class="numero-facture">Facture N° {{ numeroFacture || '---' }}</p>
+      <p>Date : {{ dateFacture | date:'dd/MM/yyyy' }}</p>
+    </div>
+  </div>
+
+  <!-- Client -->
+  <div class="client-details">
+    <p><strong>Client :</strong> {{ nomClient }}</p>
+  </div>
+
+  <!-- Table -->
+  <table class="preview-table">
+    <thead>
+      <tr>
+        <th>Désignation</th>
+        <th>Qté</th>
+        <th>P.U HT</th>
+        <th>TVA</th>
+        <th>P.T HT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ligne of lignes">
+        <td>{{ ligne.produit.nom }}</td>
+        <td>{{ ligne.quantite }}</td>
+        <td>{{ ligne.prixUnitaire | number:'1.3-3' }}</td>
+        <td>{{ ligne.tva }}%</td>
+        <td>{{ ligne.prixTotalHT | number:'1.3-3' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Totals -->
+  <div class="invoice-totals">
+    <div class="row"><span>Total HT :</span><span>{{ totalHT | number:'1.3-3' }}</span></div>
+    <div class="row"><span>TVA :</span><span>{{ totalTVA | number:'1.3-3' }}</span></div>
+    <div class="row"><span>Timbre :</span><span>{{ timbreFiscal | number:'1.3-3' }}</span></div>
+    <div class="row grand-total"><span>Total TTC :</span><span>{{ totalTTC | number:'1.3-3' }}</span></div>
+  </div>
+
+  <!-- Montant en lettres -->
+  <div class="legal-mention">
+    Montant en lettres : {{ montantEnLettres }}
+  </div>
+</div>

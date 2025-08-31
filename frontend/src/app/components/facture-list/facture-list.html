@@ -1,0 +1,76 @@
+<div class="factures-container">
+  <h2 class="title">Historique des factures</h2>
+
+  <!-- 🔍 Recherche + Filtre -->
+  <div class="filters">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (input)="applyFilters()"
+      placeholder="🔍 Rechercher par client ou numéro..."
+      class="form-control search-box"
+    />
+
+    <select [(ngModel)]="selectedYear" (change)="applyFilters()" class="form-select">
+      <option value="all">Toutes les années</option>
+      <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+    </select>
+  </div>
+
+  <!-- Tableau -->
+  <div class="table-responsive">
+    <table class="factures-table">
+      <thead>
+        <tr>
+          <th (click)="toggleSort('numeroFacture')">
+            ID
+            <span *ngIf="sortColumn==='numeroFacture'">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th (click)="toggleSort('dateFacture')">
+            Date
+            <span *ngIf="sortColumn==='dateFacture'">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th (click)="toggleSort('nomClient')">
+            Client
+            <span *ngIf="sortColumn==='nomClient'">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th (click)="toggleSort('totalTTC')">
+            Total TTC
+            <span *ngIf="sortColumn==='totalTTC'">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th>Facture PDF</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let f of filteredFactures">
+          <td>{{ f.numeroFacture }}</td>
+          <td>{{ f.dateFacture | date:'dd/MM/yyyy' }}</td>
+          <td>{{ f.nomClient }}</td>
+          <td class="align-right">{{ f.totalTTC | number:'1.2-2' }} DT</td>
+          <td>
+            <button (click)="telechargerFacture(f.id)" class="btn-download">Télécharger</button>
+          </td>
+          <td>
+            <button (click)="supprimerFacture(f.id)" class="btn-delete">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="pagination">
+  <button class="btn-paginate" [disabled]="page === 0" (click)="prevPage()">⬅ Précédent</button>
+  <span class="pagination-info">Page {{ page + 1 }} / {{ totalPages }}</span>
+  <button class="btn-paginate" [disabled]="page + 1 >= totalPages" (click)="nextPage()">Suivant ➡</button>
+</div>
+
