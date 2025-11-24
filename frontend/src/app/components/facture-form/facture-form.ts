@@ -27,7 +27,7 @@ export class FactureForm implements OnInit {
   timbreFiscal: number = 0.6;
   totalTTC: number = 0;
   montantEnLettres: string = '';
-  dateFacture: Date = new Date();
+  dateFacture: string = new Date().toISOString().split('T')[0]; 
   numeroFacture: string = '';
 
   constructor(
@@ -50,33 +50,30 @@ export class FactureForm implements OnInit {
 
   ajouterLigne() {
     if (!this.produits?.length) {
-    Swal.fire('Erreur', 'Aucun produit disponible pour créer une ligne', 'error');
-    return;
-  }
+      Swal.fire('Erreur', 'Aucun produit disponible pour créer une ligne', 'error');
+      return;
+    }
 
-  // Par défaut, on met quantité = 1, mais si jamais l’utilisateur modifie à 0 → alerte
-  const produit = this.produits[0];
-  if (!produit) return;
-  const quantite = 1;
-
-  if (quantite <= 0) {
-    Swal.fire('Quantité invalide', 'La quantité doit être supérieure à 0.', 'warning');
-    return;
-  }
-    
+    // Par défaut, on met quantité = 1 et TVA à 19%
+    const produit = this.produits[0];
+    if (!produit) return;
+    const quantite = 1;
+    const tva = 19; // TVA par défaut à 19%
+    const prixUnitaire = produit.prixHT;
+    const prixTotalHT = quantite * prixUnitaire;
+    const prixTotalTTC = prixTotalHT * (1 + tva / 100);
 
     this.lignes.push({
       produit: produit,
       quantite: quantite,
-      tva: 19,
-      prixUnitaire: produit.prixHT,
-      prixTotalHT: produit.prixHT * quantite,
-      prixTotalTTC: produit.prixHT * quantite * 1.19
+      tva: tva,
+      prixUnitaire: prixUnitaire,
+      prixTotalHT: parseFloat(prixTotalHT.toFixed(3)),
+      prixTotalTTC: parseFloat(prixTotalTTC.toFixed(3))
     });
 
     this.calculerTotaux();
-  
-}
+  }
 
 
   supprimerLigne(index: number) {
@@ -97,41 +94,66 @@ export class FactureForm implements OnInit {
   }
 
   mettreAJourLigne(index: number) {
-    let ligne = this.lignes[index];
-     if (!ligne?.produit) return;
+    const ligne = this.lignes[index];
+    if (!ligne?.produit) return;
+    
+    // Vérification de la quantité
     if (ligne.quantite <= 0) {
-    Swal.fire('Quantité invalide', 'La quantité doit être supérieure à 0.', 'warning');
-    ligne.quantite = 1; // reset par défaut
-  }
+      Swal.fire('Quantité invalide', 'La quantité doit être supérieure à 0.', 'warning');
+      ligne.quantite = 1; // Réinitialisation à 1 par défaut
+    }
+    
+    // Mise à jour des prix
     ligne.prixUnitaire = ligne.produit.prixHT;
-    ligne.prixTotalHT = ligne.quantite * ligne.prixUnitaire;
-    ligne.prixTotalTTC = ligne.prixTotalHT * (1 + ligne.tva / 100);
+    ligne.prixTotalHT = parseFloat((ligne.quantite * ligne.prixUnitaire).toFixed(3));
+    
+    // Calcul du TTC en fonction de la TVA (0% ou 19%)
+    const tauxTVA = ligne.tva || 0; // Par défaut 0 si non défini
+    ligne.prixTotalTTC = parseFloat((ligne.prixTotalHT * (1 + tauxTVA / 100)).toFixed(3));
+    
+    // Mise à jour des totaux généraux
     this.calculerTotaux();
   }
 
   calculerTotaux() {
-    this.totalHT = this.lignes.reduce((sum, l) => sum + l.prixTotalHT, 0);
-    this.totalTVA = this.lignes.reduce((sum, l) => sum + (l.prixTotalTTC - l.prixTotalHT), 0);
-    this.totalTTC = this.totalHT + this.totalTVA + this.timbreFiscal;
+    // Calcul du total HT (somme des prix totaux HT de chaque ligne)
+    this.totalHT = parseFloat(this.lignes
+      .reduce((sum, l) => sum + l.prixTotalHT, 0)
+      .toFixed(3));
+    
+    // Calcul de la TVA totale (différence entre TTC et HT)
+    this.totalTVA = parseFloat(this.lignes
+      .reduce((sum, l) => sum + (l.prixTotalTTC - l.prixTotalHT), 0)
+      .toFixed(3));
+    
+    // Calcul du TTC (HT + TVA + timbre fiscal)
+    this.totalTTC = parseFloat((this.totalHT + this.totalTVA + this.timbreFiscal).toFixed(3));
 
+    // Mise à jour du montant en lettres
     this.montantEnLettres = montantTNDEnLettres(this.totalTTC);
   }
 
   enregistrerEtImprimer() {
-    if (!this.nomClient || this.lignes.length === 0) {
-      Swal.fire('Erreur', 'Veuillez entrer un client et au moins une ligne de facture.', 'error');
+    if (!this.nomClient || !this.dateFacture || this.lignes.length === 0) {
+      Swal.fire('Erreur', 'Veuillez remplir tous les champs obligatoires (date, client) et ajouter au moins une ligne de facture.', 'error');
       return;
     }
+    
+    // Créer un objet Date à partir de la chaîne de date
+    const dateFacture = new Date(this.dateFacture);
 
     const facture = {
       nomClient: this.nomClient,
-      dateFacture: this.dateFacture,
+      dateFacture: dateFacture.toISOString().split('T')[0],
+      numeroFacture: this.numeroFacture, 
       totalHT: this.totalHT,
       totalTVA: this.totalTVA,
       timbreFiscal: this.timbreFiscal,
       totalTTC: this.totalTTC,
       lignes: this.lignes
     };
+
+    console.log(facture);
 
     this.factureService.addFacture(facture).subscribe({
       next: (savedFacture) => {

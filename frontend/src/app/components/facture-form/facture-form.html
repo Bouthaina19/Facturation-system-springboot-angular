@@ -4,8 +4,18 @@
 
     <!-- Client Info -->
     <div class="form-group">
-      <label class="form-label">Nom du client</label>
-      <input class="form-control" [(ngModel)]="nomClient" placeholder="Nom complet">
+      <label for="dateFacture">Date de facture *</label>
+      <input type="date" class="form-control" id="dateFacture" [(ngModel)]="dateFacture" name="dateFacture" required>
+    </div>
+
+    <div class="form-group">
+      <label for="numeroFacture">N° de facture</label>
+      <input type="text" class="form-control" id="numeroFacture" [(ngModel)]="numeroFacture" name="numeroFacture" placeholder="Laissé vide pour une numérotation automatique">
+    </div>
+
+    <div class="form-group">
+      <label for="nomClient">Nom du client *</label>
+      <input type="text" class="form-control" id="nomClient" [(ngModel)]="nomClient" name="nomClient" required>
     </div>
 
     <!-- Action Buttons -->
